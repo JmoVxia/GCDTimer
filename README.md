@@ -1,8 +1,8 @@
 # GCD封装定时器
 
-##用法
+## 用法
 
-####1.添加定时器，再调用启动
+#### 1.添加定时器，再调用启动
 
 ```
 [[CLGCDTimerManager sharedManager] adddDispatchTimerWithName:@"AAA"
@@ -23,7 +23,7 @@ NSLog(@"<<<<<<<<--------------->>>>>>>>>");
 
 ```
 
-####2.直接创建并且调用
+#### 2.直接创建并且调用
 
 ```
 [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
@@ -42,7 +42,7 @@ NSLog(@"<<<<<<<<--------------->>>>>>>>>");
 }];
 ```
 
-##接口
+## 接口
 
 ```
 /**开始定时器*/
