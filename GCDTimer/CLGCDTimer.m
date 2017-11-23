@@ -10,8 +10,8 @@
 
 @interface CLGCDTimer ()
 
-@property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, copy) dispatch_block_t action;
+@property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, assign) BOOL repeat;
 @property (nonatomic, assign) NSTimeInterval timeInterval;
 @property (nonatomic, strong) NSString *timerName;
@@ -76,7 +76,7 @@
 
 #pragma mark -  liftCycle
 
-+ (instancetype)sharedInstance {
++ (instancetype)sharedManager {
     static CLGCDTimerManager *manager;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -185,7 +185,6 @@
         self.isRuning = YES;
     }
 }
-
 - (void)fireTimer:(NSString *)timerName {
     self.isRuning = YES;
     CLGCDTimer *timer = self.timerObjectCache[timerName];
@@ -195,7 +194,6 @@
     }];
     self.isRuning = NO;
 }
-
 - (void)cancelTimerWithName:(NSString *)timerName {
     dispatch_source_t timer = self.timerContainer[timerName];
     if (!timer) {
@@ -205,7 +203,6 @@
     dispatch_source_cancel(timer);
     [self.timerObjectCache removeObjectForKey:timerName];
 }
-
 - (void)suspendTimer:(NSString *)timerName {
     if (self.isRuning) {
         dispatch_source_t timer = self.timerContainer[timerName];
@@ -216,7 +213,6 @@
         self.isRuning = NO;
     }
 }
-
 - (void)resumeTimer:(NSString *)timerName {
     if (!self.isRuning) {
         dispatch_source_t timer = self.timerContainer[timerName];
@@ -227,7 +223,6 @@
         self.isRuning = YES;
     }
 }
-
 #pragma mark -  Assoicate
 - (NSMutableDictionary *)timerContainer {
     if (!_timerContainer) {
@@ -241,16 +236,6 @@
     }
     return _timerObjectCache;
 }
-
-#pragma mark - Private
-
-- (BOOL)existTimer:(NSString *)timerName {
-    if (self.timerObjectCache[timerName]) {
-        return YES;
-    }
-    return NO;
-}
-
 @end
 
 
