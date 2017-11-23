@@ -22,7 +22,7 @@
     [self.view addSubview:label];
     
     static int i = 0;
-    [[CLGCDTimerManager sharedManager] adddDispatchTimerWithName:@"csb"
+    [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
                                                      timeInterval:1
                                                         delaySecs:0
                                                             queue:nil
@@ -50,7 +50,7 @@
 //                                                              });
 //                                                          }];
 
-    [[CLGCDTimerManager sharedManager] startTimer:@"csb"];
+    [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(99, 199, 99, 99)];
     button1.backgroundColor = [UIColor redColor];
     [button1 setTitle:@"恢复" forState:UIControlStateNormal];
