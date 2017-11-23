@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
 
 - (instancetype)initDispatchTimerWithName:(NSString *)timerName
                              timeInterval:(double)interval
+                                delaySecs:(float)delaySecs
                                     queue:(dispatch_queue_t)queue
                                   repeats:(BOOL)repeats
                                    action:(dispatch_block_t)action
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
  添加定时器，需要手动开启
  @param timerName 定时器名称
  @param interval 间隔时间
+ @param delaySecs 第一次延迟时间
  @param queue 线程
  @param repeats 是否重复
  @param type 类型
@@ -41,6 +43,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
  */
 - (void)adddDispatchTimerWithName:(NSString *)timerName
                      timeInterval:(NSTimeInterval)interval
+                        delaySecs:(float)delaySecs
                             queue:(dispatch_queue_t)queue
                           repeats:(BOOL)repeats
                        actionType:(CLGCDTimerType)type
@@ -49,6 +52,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
  创建定时器，会自动开启
  @param timerName 定时器名称
  @param interval 间隔时间
+ @param delaySecs 第一次延迟时间
  @param queue 线程
  @param repeats 是否重复
  @param type 类型
@@ -56,6 +60,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
  */
 - (void)scheduledDispatchTimerWithName:(NSString *)timerName
                           timeInterval:(NSTimeInterval)interval
+                             delaySecs:(float)delaySecs
                                  queue:(dispatch_queue_t)queue
                                repeats:(BOOL)repeats
                             actionType:(CLGCDTimerType)type

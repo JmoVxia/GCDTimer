@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSString *timerName;
 @property (nonatomic, assign) CLGCDTimerType type;
 @property (nonatomic, strong) NSArray *actionBlockCache;
+/**延迟时间*/
+@property (nonatomic, assign) float delaySecs;
 
 @end
 
@@ -24,6 +26,7 @@
 
 - (instancetype)initDispatchTimerWithName:(NSString *)timerName
                              timeInterval:(double)interval
+                                delaySecs:(float)delaySecs
                                     queue:(dispatch_queue_t)queue
                                   repeats:(BOOL)repeats
                                    action:(dispatch_block_t)action
@@ -31,6 +34,7 @@
     
     if (self = [super init]) {
         self.timeInterval = interval;
+        self.delaySecs = delaySecs;
         self.repeat = repeats;
         self.action = action;
         self.timerName = timerName;
@@ -97,6 +101,7 @@
 
 - (void)adddDispatchTimerWithName:(NSString *)timerName
                      timeInterval:(NSTimeInterval)interval
+                        delaySecs:(float)delaySecs
                             queue:(dispatch_queue_t)queue
                           repeats:(BOOL)repeats
                        actionType:(CLGCDTimerType)type
@@ -113,6 +118,7 @@
     if (!timer) {
         timer = [[CLGCDTimer alloc] initDispatchTimerWithName:timerName
                                                  timeInterval:interval
+                                                    delaySecs:delaySecs
                                                         queue:queue
                                                       repeats:repeats
                                                        action:action
@@ -125,6 +131,7 @@
             timer.timeInterval = interval;
             timer.serialQueue = queue;
             timer.repeat = repeats;
+            timer.delaySecs = delaySecs;
         }
     }
     dispatch_source_t timer_t = self.timerContainer[timerName];
@@ -137,12 +144,14 @@
 
 - (void)scheduledDispatchTimerWithName:(NSString *)timerName
                           timeInterval:(NSTimeInterval)interval
+                             delaySecs:(float)delaySecs
                                  queue:(dispatch_queue_t)queue
                                repeats:(BOOL)repeats
                             actionType:(CLGCDTimerType)type
                                 action:(dispatch_block_t)action {
     [self adddDispatchTimerWithName:timerName
                        timeInterval:interval
+                          delaySecs:delaySecs
                               queue:queue
                             repeats:repeats
                          actionType:type
@@ -156,7 +165,7 @@
         dispatch_source_t timer_t = self.timerContainer[timerName];
         NSAssert(timer_t, @"timerName is not vaild");
         CLGCDTimer *timer = self.timerObjectCache[timerName];
-        dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, timer.timeInterval * NSEC_PER_SEC),
+        dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, timer.delaySecs * NSEC_PER_SEC),
                                   timer.timeInterval * NSEC_PER_SEC, 0 * NSEC_PER_SEC);
         __weak typeof(self) weakSelf = self;
         switch (timer.type) {

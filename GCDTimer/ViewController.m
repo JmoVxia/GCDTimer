@@ -24,6 +24,7 @@
     static int i = 0;
     [[CLGCDTimerManager sharedManager] adddDispatchTimerWithName:@"csb"
                                                      timeInterval:1
+                                                         delaySecs:0
                                                             queue:nil
                                                           repeats:YES
                                                        actionType:CLAbandonPreviousAction
@@ -35,6 +36,20 @@
                                                                    NSLog(@"<<<<<<<<--------------->>>>>>>>>");
                                                                });
                                                            }];
+    [[CLGCDTimerManager sharedManager] adddDispatchTimerWithName:@"csb"
+                                                    timeInterval:1
+                                                       delaySecs:5
+                                                           queue:nil
+                                                         repeats:YES
+                                                      actionType:CLMergePreviousAction
+                                                          action:^{
+                                                              //主线程
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  label.text = [NSString stringWithFormat:@"%d",i];
+                                                                  NSLog(@"<<<<<<<<++++++++++++++>>>>>>>>>");
+                                                              });
+                                                          }];
+
     [[CLGCDTimerManager sharedManager] startTimer:@"csb"];
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(99, 199, 99, 99)];
     button1.backgroundColor = [UIColor redColor];
