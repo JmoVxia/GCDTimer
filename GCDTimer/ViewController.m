@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "CLGCDTimer.h"
+#import "CLGCDTimerManager.h"
 
 @interface ViewController ()
 

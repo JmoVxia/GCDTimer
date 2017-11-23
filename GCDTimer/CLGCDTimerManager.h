@@ -1,5 +1,5 @@
 //
-//  CLGCDTimer.h
+//  CLGCDTimerManager.h
 //  GCDTimer
 //
 //  Created by JmoVxia on 2017/11/23.
