@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, CLGCDTimerType) {
-    CLAbandonPreviousAction, // 废除同一个timer之前的任务
+    CLAbandonPreviousAction = 0, // 废除同一个timer之前的任务
     CLMergePreviousAction   // 将同一个timer之前的任务合并到新的任务中
 };
 
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
 + (instancetype)sharedManager;
 
 /**
- 添加定时器，需要手动开启
+ 添加定时器，需要手动开启，如果存在定时器，会根据类型替换
  @param timerName 定时器名称
  @param interval 间隔时间
  @param delaySecs 第一次延迟时间
@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, CLGCDTimerType) {
                        actionType:(CLGCDTimerType)type
                            action:(dispatch_block_t)action;
 /**
- 创建定时器，会自动开启
+ 创建定时器，会自动开启，如果存在定时器，不会重新创建
  @param timerName 定时器名称
  @param interval 间隔时间
  @param delaySecs 第一次延迟时间

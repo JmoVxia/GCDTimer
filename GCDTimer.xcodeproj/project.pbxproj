@@ -13,7 +13,8 @@
 		5B8A38861FC69E74008B153B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A38851FC69E74008B153B /* Assets.xcassets */; };
 		5B8A38891FC69E74008B153B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A38871FC69E74008B153B /* LaunchScreen.storyboard */; };
 		5B8A388C1FC69E74008B153B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A388B1FC69E74008B153B /* main.m */; };
-		5B8A38B01FC69E97008B153B /* CLGCDTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A38AF1FC69E97008B153B /* CLGCDTimerManager.m */; };
+		5B8A38B91FC7E158008B153B /* CLGCDTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A38B81FC7E158008B153B /* CLGCDTimerManager.m */; };
+		5B8A38BC1FC7E178008B153B /* AViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A38BB1FC7E178008B153B /* AViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,8 +28,10 @@
 		5B8A38881FC69E74008B153B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B8A388A1FC69E74008B153B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8A388B1FC69E74008B153B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5B8A38AE1FC69E97008B153B /* CLGCDTimerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CLGCDTimerManager.h; sourceTree = "<group>"; };
-		5B8A38AF1FC69E97008B153B /* CLGCDTimerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CLGCDTimerManager.m; sourceTree = "<group>"; };
+		5B8A38B71FC7E158008B153B /* CLGCDTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLGCDTimerManager.h; sourceTree = "<group>"; };
+		5B8A38B81FC7E158008B153B /* CLGCDTimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLGCDTimerManager.m; sourceTree = "<group>"; };
+		5B8A38BA1FC7E178008B153B /* AViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AViewController.h; sourceTree = "<group>"; };
+		5B8A38BB1FC7E178008B153B /* AViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,8 +68,10 @@
 				5B8A387D1FC69E74008B153B /* AppDelegate.m */,
 				5B8A387F1FC69E74008B153B /* ViewController.h */,
 				5B8A38801FC69E74008B153B /* ViewController.m */,
-				5B8A38AE1FC69E97008B153B /* CLGCDTimerManager.h */,
-				5B8A38AF1FC69E97008B153B /* CLGCDTimerManager.m */,
+				5B8A38BA1FC7E178008B153B /* AViewController.h */,
+				5B8A38BB1FC7E178008B153B /* AViewController.m */,
+				5B8A38B71FC7E158008B153B /* CLGCDTimerManager.h */,
+				5B8A38B81FC7E158008B153B /* CLGCDTimerManager.m */,
 				5B8A38821FC69E74008B153B /* Main.storyboard */,
 				5B8A38851FC69E74008B153B /* Assets.xcassets */,
 				5B8A38871FC69E74008B153B /* LaunchScreen.storyboard */,
@@ -148,9 +153,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B8A38811FC69E74008B153B /* ViewController.m in Sources */,
-				5B8A38B01FC69E97008B153B /* CLGCDTimerManager.m in Sources */,
+				5B8A38BC1FC7E178008B153B /* AViewController.m in Sources */,
 				5B8A388C1FC69E74008B153B /* main.m in Sources */,
 				5B8A387E1FC69E74008B153B /* AppDelegate.m in Sources */,
+				5B8A38B91FC7E158008B153B /* CLGCDTimerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
