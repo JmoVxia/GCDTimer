@@ -21,15 +21,15 @@
     self.view.backgroundColor = [UIColor whiteColor];
     _label = [[UILabel alloc] initWithFrame:CGRectMake(99, 99, 99, 99)];
     _label.font = [UIFont systemFontOfSize:40];
+    _label.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:_label];
     
-    static int i = 0;
+    __block int i = 0;
     [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
                                                          timeInterval:1
                                                             delaySecs:0
                                                                 queue:nil
                                                               repeats:YES
-                                                           actionType:CLAbandonPreviousAction
                                                                action:^{
                                                                    i++;
                                                                    //主线程
@@ -52,13 +52,13 @@
     
     UIButton *button3 = [[UIButton alloc] initWithFrame:CGRectMake(99, 299, 99, 99)];
     button3.backgroundColor = [UIColor orangeColor];
-    [button3 setTitle:@"取消" forState:UIControlStateNormal];
+    [button3 setTitle:@"销毁" forState:UIControlStateNormal];
     [button3 addTarget:self action:@selector(action3) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button3];
     
     UIButton *button4 = [[UIButton alloc] initWithFrame:CGRectMake(199, 299, 99, 99)];
     button4.backgroundColor = [UIColor orangeColor];
-    [button4 setTitle:@"添加" forState:UIControlStateNormal];
+    [button4 setTitle:@"创建" forState:UIControlStateNormal];
     [button4 addTarget:self action:@selector(action4) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button4];
     
@@ -79,13 +79,13 @@
     [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
 }
 -(void)action4{
-    static int i = 0;
+    [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
+    __block int i = 0;
     [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
                                                          timeInterval:1
                                                             delaySecs:0
                                                                 queue:nil
                                                               repeats:YES
-                                                           actionType:CLAbandonPreviousAction
                                                                action:^{
                                                                    i++;
                                                                    //主线程
@@ -93,6 +93,7 @@
                                                                        _label.text = [NSString stringWithFormat:@"%d",i];
                                                                    });
                                                                }];
+    [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
 }
 -(void)action5{
     [self dismissViewControllerAnimated:YES completion:nil];
