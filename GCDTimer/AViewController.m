@@ -96,6 +96,7 @@
     [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
 }
 -(void)action5{
+    [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)dealloc{
