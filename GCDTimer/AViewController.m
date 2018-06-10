@@ -29,7 +29,7 @@
                                                          timeInterval:1
                                                             delaySecs:0
                                                                 queue:nil
-                                                              repeats:NO
+                                                              repeats:YES
                                                                action:^{
                                                                    i++;
                                                                    //主线程
@@ -81,12 +81,12 @@
 }
 -(void)action4{
     [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
-    __block int i = 10;
+    __block int i = 0;
     [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
-                                                         timeInterval:5
-                                                            delaySecs:5
+                                                         timeInterval:1
+                                                            delaySecs:0
                                                                 queue:nil
-                                                              repeats:NO
+                                                              repeats:YES
                                                                action:^{
                                                                    i++;
                                                                    //主线程
