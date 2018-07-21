@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C9199692103197A005D3A6A /* CLGCDTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C9199672103197A005D3A6A /* CLGCDTimerManager.m */; };
 		5B8A387E1FC69E74008B153B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A387D1FC69E74008B153B /* AppDelegate.m */; };
 		5B8A38811FC69E74008B153B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A38801FC69E74008B153B /* ViewController.m */; };
 		5B8A38841FC69E74008B153B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A38821FC69E74008B153B /* Main.storyboard */; };
@@ -14,10 +15,11 @@
 		5B8A38891FC69E74008B153B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8A38871FC69E74008B153B /* LaunchScreen.storyboard */; };
 		5B8A388C1FC69E74008B153B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A388B1FC69E74008B153B /* main.m */; };
 		5B8A38BC1FC7E178008B153B /* AViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8A38BB1FC7E178008B153B /* AViewController.m */; };
-		5BB3666C20CD014C00E5DC4B /* CLGCDTimerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB3666A20CD014C00E5DC4B /* CLGCDTimerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C9199672103197A005D3A6A /* CLGCDTimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLGCDTimerManager.m; sourceTree = "<group>"; };
+		0C9199682103197A005D3A6A /* CLGCDTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLGCDTimerManager.h; sourceTree = "<group>"; };
 		5B8A38791FC69E74008B153B /* GCDTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GCDTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B8A387C1FC69E74008B153B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5B8A387D1FC69E74008B153B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -30,8 +32,6 @@
 		5B8A388B1FC69E74008B153B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5B8A38BA1FC7E178008B153B /* AViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AViewController.h; sourceTree = "<group>"; };
 		5B8A38BB1FC7E178008B153B /* AViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AViewController.m; sourceTree = "<group>"; };
-		5BB3666A20CD014C00E5DC4B /* CLGCDTimerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLGCDTimerManager.m; sourceTree = "<group>"; };
-		5BB3666B20CD014C00E5DC4B /* CLGCDTimerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLGCDTimerManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,8 +70,8 @@
 				5B8A38801FC69E74008B153B /* ViewController.m */,
 				5B8A38BA1FC7E178008B153B /* AViewController.h */,
 				5B8A38BB1FC7E178008B153B /* AViewController.m */,
-				5BB3666B20CD014C00E5DC4B /* CLGCDTimerManager.h */,
-				5BB3666A20CD014C00E5DC4B /* CLGCDTimerManager.m */,
+				0C9199682103197A005D3A6A /* CLGCDTimerManager.h */,
+				0C9199672103197A005D3A6A /* CLGCDTimerManager.m */,
 				5B8A38821FC69E74008B153B /* Main.storyboard */,
 				5B8A38851FC69E74008B153B /* Assets.xcassets */,
 				5B8A38871FC69E74008B153B /* LaunchScreen.storyboard */,
@@ -152,7 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BB3666C20CD014C00E5DC4B /* CLGCDTimerManager.m in Sources */,
+				0C9199692103197A005D3A6A /* CLGCDTimerManager.m in Sources */,
 				5B8A38811FC69E74008B153B /* ViewController.m in Sources */,
 				5B8A38BC1FC7E178008B153B /* AViewController.m in Sources */,
 				5B8A388C1FC69E74008B153B /* main.m in Sources */,
