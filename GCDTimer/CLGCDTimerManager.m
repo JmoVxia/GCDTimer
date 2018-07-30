@@ -39,7 +39,6 @@
                                   repeats:(BOOL)repeats
                                    action:(dispatch_block_t)action{
     if (self = [super init]) {
-        NSLog(@"创建定时器");
         self.timeInterval = interval;
         self.delaySecs    = delaySecs;
         self.repeat       = repeats;
@@ -59,7 +58,6 @@
                                           repeats:(BOOL)repeats
                                            action:(dispatch_block_t)action{
     if (self = [super init]) {
-        NSLog(@"创建定时器");
         self.timeInterval = interval;
         self.delaySecs    = delaySecs;
         self.repeat       = repeats;
@@ -77,7 +75,6 @@
 }
 /**开始定时器*/
 - (void)startTimer {
-    NSLog(@"开始定时器");
     //拿到当前线程线程
     dispatch_async(self.serialQueue, ^{
         dispatch_source_set_timer(self.timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(self.delaySecs * NSEC_PER_SEC)),(NSInteger)(self.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
@@ -107,7 +104,6 @@
 - (void)cancelTimer {
     //拿到当前线程线程
     dispatch_async(self.serialQueue, ^{
-        NSLog(@"取消定时器");
         if (!self.isRuning) {
             [self resumeTimer];
         }
@@ -181,38 +177,7 @@ static CLGCDTimerManager *_manager = nil;
 - (id)mutableCopyWithZone:(NSZone __unused*)zone {
     return _manager;
 }
-#pragma mark - 添加定时器
-- (void)adddDispatchTimerWithName:(NSString *)timerName
-                     timeInterval:(NSTimeInterval)interval
-                        delaySecs:(float)delaySecs
-                            queue:(dispatch_queue_t)queue
-                          repeats:(BOOL)repeats
-                           action:(dispatch_block_t)action {
-    NSParameterAssert(timerName);
-    if (nil == queue) {
-        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    }
-    
-    __strong NSString *string = timerName;
-    CLGCDTimer *GCDTimer = [self timer:string];
-    if (!GCDTimer) {
-        GCDTimer = [[CLGCDTimer alloc] initDispatchTimerWithName:string
-                                                    timeInterval:interval
-                                                       delaySecs:delaySecs
-                                                           queue:queue
-                                                         repeats:repeats
-                                                          action:action];
-        [self setTimer:GCDTimer name:string];
-        NSLog(@"创建定时器成功");
-    } else {
-        NSLog(@"创建定时器失败");
-        GCDTimer.timeInterval = interval;
-        GCDTimer.delaySecs    = delaySecs;
-        GCDTimer.serialQueue  = queue;
-        GCDTimer.repeat       = repeats;
-        GCDTimer.action       = action;
-    }
-}
+
 #pragma mark - 创建定时器
 - (void)scheduledDispatchTimerWithName:(NSString *)timerName
                           timeInterval:(NSTimeInterval)interval
@@ -220,17 +185,22 @@ static CLGCDTimerManager *_manager = nil;
                                  queue:(dispatch_queue_t)queue
                                repeats:(BOOL)repeats
                                 action:(dispatch_block_t)action {
+    NSParameterAssert(timerName);
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
     if (GCDTimer) {
         return;
     }
-    [self adddDispatchTimerWithName:string
-                       timeInterval:interval
-                          delaySecs:delaySecs
-                              queue:queue
-                            repeats:repeats
-                             action:action];
+    if (queue == nil) {
+        queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    }
+    GCDTimer = [[CLGCDTimer alloc] initDispatchTimerWithName:string
+                                                timeInterval:interval
+                                                   delaySecs:delaySecs
+                                                       queue:queue
+                                                     repeats:repeats
+                                                      action:action];
+    [self setTimer:GCDTimer name:string];
 }
 #pragma mark - 开始定时器
 - (void)startTimer:(NSString *)timerName {
