@@ -76,14 +76,13 @@
 /**开始定时器*/
 - (void)startTimer {
     dispatch_source_set_timer(self.timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(self.delaySecs * NSEC_PER_SEC)),(NSInteger)(self.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
-    __weak typeof(self) weakSelf = self;
     dispatch_source_set_event_handler(self.timer_t, ^{
         if (self.actionBlock) {
             self.actionBlock(self.actionTimes);
             self.actionTimes ++;
         }
         if (!self.repeat) {
-            [weakSelf cancelTimer];
+            [self cancelTimer];
         }
     });
     [self resumeTimer];
@@ -198,14 +197,13 @@ static CLGCDTimerManager *_manager = nil;
         NSParameterAssert(string);
         dispatch_source_t timer_t = GCDTimer.timer_t;
         dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(GCDTimer.delaySecs * NSEC_PER_SEC)),(NSInteger)(GCDTimer.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
-        __weak typeof(self) weakSelf = self;
         dispatch_source_set_event_handler(timer_t, ^{
             if (GCDTimer.actionBlock) {
                 GCDTimer.actionBlock(GCDTimer.actionTimes);
                 GCDTimer.actionTimes ++;
             }
             if (!GCDTimer.repeat) {
-                [weakSelf cancelTimerWithName:string];
+                [self cancelTimerWithName:string];
             }
         });
         [self resumeTimer:string];
