@@ -75,21 +75,18 @@
 }
 /**开始定时器*/
 - (void)startTimer {
-    //拿到当前线程线程
-    dispatch_async(self.serialQueue, ^{
-        dispatch_source_set_timer(self.timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(self.delaySecs * NSEC_PER_SEC)),(NSInteger)(self.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
-        __weak typeof(self) weakSelf = self;
-        dispatch_source_set_event_handler(self.timer_t, ^{
-            if (self.actionBlock) {
-                self.actionBlock(self.actionTimes);
-                self.actionTimes ++;
-            }
-            if (!self.repeat) {
-                [weakSelf cancelTimer];
-            }
-        });
-        [self resumeTimer];
+    dispatch_source_set_timer(self.timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(self.delaySecs * NSEC_PER_SEC)),(NSInteger)(self.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
+    __weak typeof(self) weakSelf = self;
+    dispatch_source_set_event_handler(self.timer_t, ^{
+        if (self.actionBlock) {
+            self.actionBlock(self.actionTimes);
+            self.actionTimes ++;
+        }
+        if (!self.repeat) {
+            [weakSelf cancelTimer];
+        }
     });
+    [self resumeTimer];
 }
 /**执行一次定时器响应*/
 - (void)responseOnceTimer {
@@ -102,33 +99,24 @@
 }
 /**取消定时器*/
 - (void)cancelTimer {
-    //拿到当前线程线程
-    dispatch_async(self.serialQueue, ^{
-        if (!self.isRuning) {
-            [self resumeTimer];
-        }
-        dispatch_source_cancel(self.timer_t);
-    });
+    if (!self.isRuning) {
+        [self resumeTimer];
+    }
+    dispatch_source_cancel(self.timer_t);
 }
 /**暂停定时器*/
 - (void)suspendTimer {
-    //拿到当前线程线程
-    dispatch_async(self.serialQueue, ^{
-        if (self.isRuning) {
-            dispatch_suspend(self.timer_t);
-            self.isRuning = NO;
-        }
-    });
+    if (self.isRuning) {
+        dispatch_suspend(self.timer_t);
+        self.isRuning = NO;
+    }
 }
 /**恢复定时器*/
 - (void)resumeTimer {
-    //拿到当前线程线程
-    dispatch_async(self.serialQueue, ^{
-        if (!self.isRuning) {
-            dispatch_resume(self.timer_t);
-            self.isRuning = YES;
-        }
-    });
+    if (!self.isRuning) {
+        dispatch_resume(self.timer_t);
+        self.isRuning = YES;
+    }
 }
 @end
 
@@ -207,23 +195,20 @@ static CLGCDTimerManager *_manager = nil;
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
     if (!GCDTimer.isRuning && GCDTimer) {
-        //拿到当前线程线程
-        dispatch_async(GCDTimer.serialQueue, ^{
-            NSParameterAssert(string);
-            dispatch_source_t timer_t = GCDTimer.timer_t;
-            dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(GCDTimer.delaySecs * NSEC_PER_SEC)),(NSInteger)(GCDTimer.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
-            __weak typeof(self) weakSelf = self;
-            dispatch_source_set_event_handler(timer_t, ^{
-                if (GCDTimer.actionBlock) {
-                    GCDTimer.actionBlock(GCDTimer.actionTimes);
-                    GCDTimer.actionTimes ++;
-                }
-                if (!GCDTimer.repeat) {
-                    [weakSelf cancelTimerWithName:string];
-                }
-            });
-            [self resumeTimer:string];
+        NSParameterAssert(string);
+        dispatch_source_t timer_t = GCDTimer.timer_t;
+        dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(GCDTimer.delaySecs * NSEC_PER_SEC)),(NSInteger)(GCDTimer.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
+        __weak typeof(self) weakSelf = self;
+        dispatch_source_set_event_handler(timer_t, ^{
+            if (GCDTimer.actionBlock) {
+                GCDTimer.actionBlock(GCDTimer.actionTimes);
+                GCDTimer.actionTimes ++;
+            }
+            if (!GCDTimer.repeat) {
+                [weakSelf cancelTimerWithName:string];
+            }
         });
+        [self resumeTimer:string];
     }
 }
 #pragma mark - 执行一次定时器响应
@@ -245,11 +230,8 @@ static CLGCDTimerManager *_manager = nil;
         [self resumeTimer:string];
     }
     if (GCDTimer) {
-        //拿到当前线程线程
-        dispatch_async(GCDTimer.serialQueue, ^{
-            dispatch_source_cancel(GCDTimer.timer_t);
-            [self.timerObjectCache removeObjectForKey:string];
-        });
+        dispatch_source_cancel(GCDTimer.timer_t);
+        [self.timerObjectCache removeObjectForKey:string];
     }
 }
 #pragma mark - 暂停定时器
@@ -257,11 +239,8 @@ static CLGCDTimerManager *_manager = nil;
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
     if (GCDTimer.isRuning && GCDTimer) {
-        //拿到当前线程线程
-        dispatch_async(GCDTimer.serialQueue, ^{
-            dispatch_suspend(GCDTimer.timer_t);
-            GCDTimer.isRuning = NO;
-        });
+        dispatch_suspend(GCDTimer.timer_t);
+        GCDTimer.isRuning = NO;
     }
 }
 #pragma mark - 恢复定时器
@@ -269,11 +248,8 @@ static CLGCDTimerManager *_manager = nil;
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
     if (!GCDTimer.isRuning && GCDTimer) {
-        //拿到当前线程线程
-        dispatch_async(GCDTimer.serialQueue, ^{
-            dispatch_resume(GCDTimer.timer_t);
-            GCDTimer.isRuning = YES;
-        });
+        dispatch_resume(GCDTimer.timer_t);
+        GCDTimer.isRuning = YES;
     }
 }
 //MARK:JmoVxia---获取定时器
