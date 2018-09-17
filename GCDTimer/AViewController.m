@@ -33,7 +33,7 @@
                                                                     delaySecs:0
                                                                         queue:nil
                                                                       repeats:YES
-                                                                       action:^{
+                                                                       action:^(NSInteger actionTimes) {
                                                                            i++;
                                                                            //主线程
                                                                            dispatch_async(dispatch_get_main_queue(), ^{
@@ -97,13 +97,14 @@
                                                             delaySecs:0
                                                                 queue:nil
                                                               repeats:YES
-                                                               action:^{
+                                                               action:^(NSInteger actionTimes) {
                                                                    i++;
                                                                    //主线程
                                                                    dispatch_async(dispatch_get_main_queue(), ^{
                                                                        _label.text = [NSString stringWithFormat:@"%d",i];
                                                                    });
                                                                }];
+    NSLog(@"%@",[[CLGCDTimerManager sharedManager] timer:@"AAA"]);
     [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
 }
 -(void)action5{

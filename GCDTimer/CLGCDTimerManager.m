@@ -10,7 +10,7 @@
 
 @interface CLGCDTimer ()
 /**响应*/
-@property (nonatomic, copy) dispatch_block_t   action;
+@property (nonatomic, copy) void(^actionBlock)(NSInteger actionTimes);
 /**线程*/
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 /**定时器名字*/
@@ -37,12 +37,12 @@
                                 delaySecs:(float)delaySecs
                                     queue:(dispatch_queue_t)queue
                                   repeats:(BOOL)repeats
-                                   action:(dispatch_block_t)action{
+                                   action:(void(^)(NSInteger actionTimes))action{
     if (self = [super init]) {
         self.timeInterval = interval;
         self.delaySecs    = delaySecs;
         self.repeat       = repeats;
-        self.action       = action;
+        self.actionBlock  = action;
         self.timerName    = timerName;
         self.isRuning     = NO;
         self.serialQueue           = dispatch_queue_create([[NSString stringWithFormat:@"CLGCDTimer.%p", self] cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
@@ -56,12 +56,12 @@
                                         delaySecs:(float)delaySecs
                                             queue:(dispatch_queue_t)queue
                                           repeats:(BOOL)repeats
-                                           action:(dispatch_block_t)action{
+                                           action:(void(^)(NSInteger actionTimes))action{
     if (self = [super init]) {
         self.timeInterval = interval;
         self.delaySecs    = delaySecs;
         self.repeat       = repeats;
-        self.action       = action;
+        self.actionBlock  = action;
         self.timerName    = nil;
         self.isRuning     = NO;
         self.serialQueue           = dispatch_queue_create([[NSString stringWithFormat:@"CLGCDTimer.%p", self] cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
@@ -70,8 +70,8 @@
     }
     return self;
 }
-- (void)replaceOldAction:(dispatch_block_t)action {
-    self.action = action;
+- (void)replaceOldAction:(void(^)(NSInteger actionTimes))action {
+    self.actionBlock = action;
 }
 /**开始定时器*/
 - (void)startTimer {
@@ -80,8 +80,8 @@
         dispatch_source_set_timer(self.timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(self.delaySecs * NSEC_PER_SEC)),(NSInteger)(self.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
         __weak typeof(self) weakSelf = self;
         dispatch_source_set_event_handler(self.timer_t, ^{
-            if (self.action) {
-                self.action();
+            if (self.actionBlock) {
+                self.actionBlock(self.actionTimes);
                 self.actionTimes ++;
             }
             if (!self.repeat) {
@@ -94,8 +94,8 @@
 /**执行一次定时器响应*/
 - (void)responseOnceTimer {
     self.isRuning    = YES;
-    if (self.action) {
-        self.action();
+    if (self.actionBlock) {
+        self.actionBlock(self.actionTimes);
         self.actionTimes ++;
     }
     self.isRuning = NO;
@@ -184,7 +184,7 @@ static CLGCDTimerManager *_manager = nil;
                              delaySecs:(float)delaySecs
                                  queue:(dispatch_queue_t)queue
                                repeats:(BOOL)repeats
-                                action:(dispatch_block_t)action {
+                                action:(void(^)(NSInteger actionTimes))action {
     NSParameterAssert(timerName);
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
@@ -214,8 +214,8 @@ static CLGCDTimerManager *_manager = nil;
             dispatch_source_set_timer(timer_t, dispatch_time(DISPATCH_TIME_NOW, (NSInteger)(GCDTimer.delaySecs * NSEC_PER_SEC)),(NSInteger)(GCDTimer.timeInterval * NSEC_PER_SEC), 0 * NSEC_PER_SEC);
             __weak typeof(self) weakSelf = self;
             dispatch_source_set_event_handler(timer_t, ^{
-                if (GCDTimer.action) {
-                    GCDTimer.action();
+                if (GCDTimer.actionBlock) {
+                    GCDTimer.actionBlock(GCDTimer.actionTimes);
                     GCDTimer.actionTimes ++;
                 }
                 if (!GCDTimer.repeat) {
@@ -231,8 +231,8 @@ static CLGCDTimerManager *_manager = nil;
     __strong NSString *string = timerName;
     CLGCDTimer *GCDTimer = [self timer:string];
     GCDTimer.isRuning    = YES;
-    if (GCDTimer.action) {
-        GCDTimer.action();
+    if (GCDTimer.actionBlock) {
+        GCDTimer.actionBlock(GCDTimer.actionTimes);
         GCDTimer.actionTimes ++;
     }
     GCDTimer.isRuning = NO;
