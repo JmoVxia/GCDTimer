@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     _label = [[UILabel alloc] initWithFrame:CGRectMake(99, 99, 99, 99)];
     _label.font = [UIFont systemFontOfSize:40];
@@ -25,29 +26,24 @@
     [self.view addSubview:_label];
     
     __block int i = 0;
-    
-       // 开启异步子线程
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
-                                                                 timeInterval:1
-                                                                    delaySecs:0
-                                                                        queue:nil
-                                                                      repeats:YES
-                                                                       action:^(NSInteger actionTimes) {
-                                                                           i++;
-                                                                           //主线程
-                                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                                               _label.text = [NSString stringWithFormat:@"%ld",(long)i];
-                                                                           });
-                                                                       }];
-            
-            [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
-        });
-    
-    
+    // 开启异步子线程
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [CLGCDTimerManager scheduledTimerWithName:@"AAA"
+                                         interval:1
+                                        delaySecs:0
+                                            queue:nil
+                                          repeats:YES
+                                           action:^(NSInteger actionTimes) {
+                                               i++;
+                                               //主线程
+                                               dispatch_async(dispatch_get_main_queue(), ^{
+                                                   self->_label.text = [NSString stringWithFormat:@"%ld",(long)i];
+                                               });
+                                           }];
 
+        [CLGCDTimerManager start:@"AAA"];
+    });
     
-   
     UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(99, 199, 99, 99)];
     button1.backgroundColor = [UIColor redColor];
     [button1 setTitle:@"恢复" forState:UIControlStateNormal];
@@ -80,35 +76,35 @@
     
 }
 -(void)action1{
-    [[CLGCDTimerManager sharedManager] resumeTimer:@"AAA"];
+    [CLGCDTimerManager resume:@"AAA"];
 }
 -(void)action2{
-    [[CLGCDTimerManager sharedManager] suspendTimer:@"AAA"];
+    [CLGCDTimerManager suspend:@"AAA"];
 }
 -(void)action3{
     _label.text = @"0";
-    [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
+    [CLGCDTimerManager cancel:@"AAA"];
 }
 -(void)action4{
-    [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
+    [CLGCDTimerManager cancel:@"AAA"];
     __block int i = 0;
-    [[CLGCDTimerManager sharedManager] scheduledDispatchTimerWithName:@"AAA"
-                                                         timeInterval:1
-                                                            delaySecs:0
-                                                                queue:nil
-                                                              repeats:YES
-                                                               action:^(NSInteger actionTimes) {
-                                                                   i++;
-                                                                   //主线程
-                                                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                                                       _label.text = [NSString stringWithFormat:@"%d",i];
-                                                                   });
-                                                               }];
-    NSLog(@"%@",[[CLGCDTimerManager sharedManager] timer:@"AAA"]);
-    [[CLGCDTimerManager sharedManager] startTimer:@"AAA"];
+    [CLGCDTimerManager scheduledTimerWithName:@"AAA"
+                                     interval:1
+                                    delaySecs:0
+                                        queue:nil
+                                      repeats:YES
+                                       action:^(NSInteger actionTimes) {
+                                           i++;
+                                           //主线程
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               self->_label.text = [NSString stringWithFormat:@"%d",i];
+                                           });
+                                       }];
+    NSLog(@"%@",[CLGCDTimerManager timer:@"AAA"]);
+    [CLGCDTimerManager start:@"AAA"];
 }
 -(void)action5{
-    [[CLGCDTimerManager sharedManager] cancelTimerWithName:@"AAA"];
+    [CLGCDTimerManager cancel:@"AAA"];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)dealloc{
